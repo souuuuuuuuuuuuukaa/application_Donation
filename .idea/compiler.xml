@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="userms" />
+        <module name="DiscoveryService" />
+        <module name="Org_MS" />
+        <module name="Gateway" />
+        <module name="ConfigMS" />
+        <module name="Donation" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="configMS" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ConfigMS" options="-parameters" />
+      <module name="DiscoveryService" options="-parameters" />
+      <module name="Donation" options="-parameters" />
+      <module name="Gateway" options="-parameters" />
+      <module name="Org_MS" options="-parameters" />
+      <module name="userms" options="-parameters" />
+    </option>
+  </component>
+</project>
