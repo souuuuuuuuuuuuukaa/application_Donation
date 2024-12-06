@@ -8,7 +8,7 @@ import com.example.org_ms.Repository.OrgRepo;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/organizations")
+@RequestMapping("/organizations")
 public class OrganController {
 
     @Autowired
