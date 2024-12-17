@@ -8,34 +8,39 @@ import com.example.org_ms.Repository.OrgRepo;
 import java.util.List;
 
 @RestController
-@RequestMapping("/organizations")
+@RequestMapping("/organisations")
 public class OrganController {
 
     @Autowired
     private OrgRepo organizationRepository;
 
     @GetMapping("/ListOrganisation")
-    public List<Organization> getAllOrganizations() {
+    public List<Organization> getAllOrganisations() {
         return organizationRepository.findAll();
     }
 
     @PostMapping("createOrg")
-    public Organization createOrganization(@RequestBody Organization organization) {
+    public Organization createOrganisation(@RequestBody Organization organization) {
         return organizationRepository.save(organization);
     }
 
-    @GetMapping("/{id}")
-    public Organization getOrganizationById(@PathVariable Long id) {
+    @GetMapping("/getOrganisationById/{id}")
+    public Organization getOrganisationById(@PathVariable Long id) {
         return organizationRepository.findById(id).get();
     }
 
     @PutMapping("/Update/{id}")
-    public Organization updateOrganization(@PathVariable Long id, @RequestBody Organization organizationDetails) {
+    public Organization updateOrganisation(@PathVariable Long id, @RequestBody Organization organizationDetails) {
         Organization organization = organizationRepository.findById(id).get();
         organization.setName(organizationDetails.getName());
         organization.setAddress(organizationDetails.getAddress());
         return organizationRepository.save(organization);
     }
+    @DeleteMapping("/deleteOrganisationById/{id}")
+    public void deleteOrganisationById(@PathVariable Long id){
+        organizationRepository.deleteById(id);
+    }
+
 
 }
 

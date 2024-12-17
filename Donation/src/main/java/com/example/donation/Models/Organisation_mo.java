@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Organisation_mo {
-    private long id;
+    private long idORG;
     private String name;
     private String address;
 }

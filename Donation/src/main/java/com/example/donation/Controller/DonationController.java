@@ -4,6 +4,7 @@ import com.example.donation.Entity.Donation;
 import com.example.donation.Repositories.DonRepo;
 import com.example.donation.Services.OrgRestClient;
 import com.example.donation.Services.UserRestClient;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,35 +24,52 @@ public class DonationController {
     @Autowired
     private OrgRestClient orgRestClient;
 
-    // Get all donations
-    @GetMapping("/listdon")
+    @GetMapping("/getAll")
     public List<Donation> getAllDonations() {
         return donationRep.findAll();
     }
+    @GetMapping("/getDonationById/{id}")
+    public Donation getDonationById(@PathVariable long id){
+        Donation donation = donationRep.findById(id).get();
+        donation.setUser(userRestClient.getUserById(donation.getUserId()));
+        donation.setOrg(orgRestClient.getOrganisationById(donation.getOrganisationId()));
+        return donation;
+    }
 
-    @PostMapping("createdon")
-    public Donation createDonation(@RequestBody Donation donation) {
-        return donationRep.save(donation);
+
+  /*  @PostMapping
+    public ResponseEntity<Donation> createDonation(@Valid @RequestBody Donation donation) {
+        Donation savedDonation = donationRep.save(donation);
+        return new ResponseEntity<>(savedDonation, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public Donation getDonationById(@PathVariable Long id) {
-        return donationRep.findById(id).get();
+    public ResponseEntity<Donation> getDonationById(@PathVariable Long id) {
+        Donation donation = donationRep.findById(id).orElseThrow(() -> new RuntimeException("Donation not found"));
+        return new ResponseEntity<>(donation, HttpStatus.OK);
     }
 
-    @PutMapping("/Updatedon/{id}")
-    public Donation updateDonation(@PathVariable Long id, @RequestBody Donation DonationDetails) {
-        Donation Donation = donationRep.findById(id).get();
-        Donation.setDonor(DonationDetails.getDonor());
-        Donation.setAmount(DonationDetails.getAmount());
-        return donationRep.save(Donation);
+    @PutMapping("/Update/{id}")
+    public ResponseEntity<Donation> updateDonation(@PathVariable Long id, @Valid @RequestBody Donation donationDetails) {
+        Donation donation = donationRep.findById(id).orElseThrow(() -> new RuntimeException("Donation not found"));
+        donation.setAmount(donationDetails.getAmount());
+        donation.setUserId(donationDetails.getUserId());
+        donation.setOrganisationId(donationDetails.getOrganisationId());
+        Donation updatedDonation = donationRep.save(donation);
+        return new ResponseEntity<>(updatedDonation, HttpStatus.OK);
     }
 
-    @GetMapping("/donations")
-    public Donation getDonation(@PathVariable Long id){
-        Donation donation=donationRep.findById(id).get();
-        donation.setUser(userRestClient.getUserById(donation.getId()));
-        donation.setOrganisation(orgRestClient.getOrganisationById(donation.getId()));
-        return donation;
+    @GetMapping("/{id}/details")
+    public ResponseEntity<Donation> getDonationWithDetails(@PathVariable Long id) {
+        Donation donation = donationRep.findById(id).orElseThrow(() -> new RuntimeException("Donation not found"));
+        donation.setUser(userRestClient.getUserById(donation.getUserId()));
+        donation.setOrg(orgRestClient.getOrganisationById(donation.getOrganisationId()));
+        return new ResponseEntity<>(donation, HttpStatus.OK);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+    */
 }

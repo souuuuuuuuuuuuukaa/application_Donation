@@ -11,19 +11,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
+@Builder
 public class Donation {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Automatically generates a unique ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String donor;  // Name of the donor
-    private int amount; // Amount donated
-
+    private Long userId;
+    private Long organisationId;
+    private Double amount;
     @Transient
-    private Organisation_mo organisation;
+    private Organisation_mo org;
     @Transient
     private User_mo user;
+}
 
-    }

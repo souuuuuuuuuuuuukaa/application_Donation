@@ -9,8 +9,8 @@ import java.util.List;
 
 @FeignClient(name = "users")
 public interface UserRestClient {
-    @GetMapping(path = "/Users/{id}")
+    @GetMapping(path = "/users/getUserById/{id}")
     User_mo getUserById(@PathVariable Long id);
-    @GetMapping(path = "/Users")
+    @GetMapping(path = "/users/getall")
     List<User_mo> getUsers();
 }

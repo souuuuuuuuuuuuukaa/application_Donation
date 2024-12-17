@@ -9,8 +9,8 @@ import java.util.List;
 
 @FeignClient(name = "Orgms")
 public interface OrgRestClient {
-    @GetMapping(path = "/orgs/{id}")
-    Organisation_mo getOrganisationById(@PathVariable Long id);
-    @GetMapping(path = "/orgs")
-    List<Organisation_mo> getOrganisations();
+    @GetMapping(path = "/organisations/getOrganisationById/{id}")
+    Organisation_mo getOrganisationById(@PathVariable long id);
+    @GetMapping(path = "/organisations/ListOrganisation")
+    List<Organisation_mo> getAllOrganisations();
 }

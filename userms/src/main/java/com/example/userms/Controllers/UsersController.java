@@ -24,7 +24,7 @@ public class UsersController {
     public Users createUser(@RequestBody Users user) {
         return userRepo.save(user);
     }
-    @GetMapping("/{id}")
+    @GetMapping("/getUserById/{id}")
     public Users getUserById(@PathVariable Long id) {
         return userRepo.findById(id).get();
     }
@@ -36,5 +36,9 @@ public class UsersController {
         user.setPrenom(userDetails.getPrenom());
         user.setEmail(userDetails.getEmail());
         return userRepo.save(user);
+    }
+    @DeleteMapping("/deleteUserById/{id}")
+    public void deleteUserById(@PathVariable Long id){
+        userRepo.deleteById(id);
     }
 }
