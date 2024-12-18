@@ -1,7 +1,9 @@
 package com.example.donation.Controller;
 
 import com.example.donation.Entity.Donation;
+import com.example.donation.Entity.UserDonation;
 import com.example.donation.Repositories.DonRepo;
+import com.example.donation.Repositories.UserDonRepo;
 import com.example.donation.Services.OrgRestClient;
 import com.example.donation.Services.UserRestClient;
 import jakarta.validation.Valid;
@@ -23,6 +25,8 @@ public class DonationController {
     private UserRestClient userRestClient;
     @Autowired
     private OrgRestClient orgRestClient;
+    @Autowired
+    private UserDonRepo userDonRepo;
 
     @GetMapping("/getAll")
     public List<Donation> getAllDonations() {
@@ -31,7 +35,8 @@ public class DonationController {
     @GetMapping("/getDonationById/{id}")
     public Donation getDonationById(@PathVariable long id){
         Donation donation = donationRep.findById(id).get();
-        donation.setUser(userRestClient.getUserById(donation.getUserId()));
+        UserDonation userDonation=userDonRepo.findById(id).get();
+        userDonation.setUser(userRestClient.getUserById(userDonation.getUserId()));
         donation.setOrg(orgRestClient.getOrganisationById(donation.getOrganisationId()));
         return donation;
     }

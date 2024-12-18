@@ -1,13 +1,13 @@
 package com.example.donation.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.donation.Models.User_mo;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -18,5 +18,12 @@ public class UserDonation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Automatically generates a unique ID
     long id;
+    private Double amount;
+    private Long userId;
+    private LocalDate date;
+    @Transient
+    private User_mo user;
+    @ManyToOne
+    private Donation don;
 
 }
